@@ -1,8 +1,6 @@
 import Product from '../models/Product.js';
 
-// @desc    Fetch all products
-// @route   GET /api/products
-// @access  Public
+
 export const getProducts = async (req, res) => {
     try {
         const products = await Product.find({}).sort({ createdAt: -1 });
@@ -12,9 +10,7 @@ export const getProducts = async (req, res) => {
     }
 };
 
-// @desc    Fetch single product
-// @route   GET /api/products/:id
-// @access  Public
+
 export const getProductById = async (req, res) => {
     try {
         const product = await Product.findById(req.params.id);
@@ -29,9 +25,7 @@ export const getProductById = async (req, res) => {
     }
 };
 
-// @desc    Create a product
-// @route   POST /api/products
-// @access  Private/Admin
+
 export const createProduct = async (req, res) => {
     try {
         const { name, price, description, category, image } = req.body;
@@ -52,9 +46,7 @@ export const createProduct = async (req, res) => {
     }
 };
 
-// @desc    Update a product
-// @route   PUT /api/products/:id
-// @access  Private/Admin
+
 export const updateProduct = async (req, res) => {
     try {
         const { name, price, description, category, image } = req.body;
@@ -78,9 +70,7 @@ export const updateProduct = async (req, res) => {
     }
 };
 
-// @desc    Delete a product
-// @route   DELETE /api/products/:id
-// @access  Private/Admin
+
 export const deleteProduct = async (req, res) => {
     try {
         const product = await Product.findById(req.params.id);
@@ -96,20 +86,18 @@ export const deleteProduct = async (req, res) => {
     }
 };
 
-// @desc    Seed database with dummy products
-// @route   POST /api/products/seed
-// @access  Public
+
 export const seedProducts = async (req, res) => {
     try {
         await Product.deleteMany();
 
-        // Use an existing user or a dummy ID if none exists for seeding
+        
         const User = (await import('../models/User.js')).default;
         const adminUser = await User.findOne({ role: 'admin' });
         const userId = adminUser ? adminUser._id : "69a027b62646390e55e1770b";
 
         const sampleProducts = [
-            // Millets
+            
             {
                 user: userId,
                 name: 'Organic Ragi (Finger Millet)',
@@ -166,7 +154,7 @@ export const seedProducts = async (req, res) => {
                 category: 'Millets',
                 price: 105,
             },
-            // Rice
+            
             {
                 user: userId,
                 name: 'Karuppu Kavuni Rice (Black Rice)',

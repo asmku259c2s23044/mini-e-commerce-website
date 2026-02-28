@@ -6,26 +6,24 @@ dotenv.config();
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
-// @desc    Handle Stripe webhooks
-// @route   POST /api/webhook
-// @access  Public
+
 export const handleWebhook = async (req, res) => {
     const sig = req.headers['stripe-signature'];
     let event;
 
     try {
-        // Note: express.raw is needed here, we'll configure it in server.js
+        
         event = stripe.webhooks.constructEvent(req.body, sig, process.env.STRIPE_WEBHOOK_SECRET);
     } catch (err) {
         console.error(`Webhook Error: ${err.message}`);
         return res.status(400).send(`Webhook Error: ${err.message}`);
     }
 
-    // Handle the event
+    
     if (event.type === 'payment_intent.succeeded') {
         const paymentIntent = event.data.object;
 
-        // Find order by Stripe Payment Intent ID
+        
         try {
             const order = await Order.findOne({ stripePaymentIntentId: paymentIntent.id });
 
@@ -49,6 +47,6 @@ export const handleWebhook = async (req, res) => {
         }
     }
 
-    // Return a 200 response to acknowledge receipt of the event
+
     res.send();
 };

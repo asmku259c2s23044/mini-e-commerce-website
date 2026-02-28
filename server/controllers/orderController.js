@@ -9,9 +9,7 @@ const razorpay = new Razorpay({
     key_secret: process.env.RAZORPAY_KEY_SECRET,
 });
 
-// @desc    Create new order & Razorpay Order
-// @route   POST /api/orders
-// @access  Private
+
 export const addOrderItems = async (req, res) => {
     const {
         orderItems,

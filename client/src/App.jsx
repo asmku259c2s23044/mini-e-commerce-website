@@ -13,6 +13,7 @@ import AdminProductsPage from './pages/AdminProductsPage';
 import AdminOrdersPage from './pages/AdminOrdersPage';
 import EditProductPage from './pages/EditProductPage';
 import ProtectedRoute from './components/ProtectedRoute';
+import { FavoritesProvider } from "./context/FavoritesContext";
 
 function App() {
     const location = useLocation();
@@ -20,9 +21,10 @@ function App() {
     const showFooter = !hideFooterRoutes.includes(location.pathname);
 
     return (
-        <div className="min-h-screen bg-[#f8faf0] flex flex-col font-sans text-gray-900 transition-colors duration-500">
-            <Navbar />
-            <main className="flex-grow">
+        <FavoritesProvider>
+            <div className="min-h-screen bg-[#f8faf0] flex flex-col font-sans text-gray-900 transition-colors duration-500">
+                <Navbar />
+                <main className="flex-grow">
                 <Routes>
                     <Route path="/" element={<HomePage />} />
                     <Route path="/cart" element={
@@ -66,8 +68,10 @@ function App() {
                 </Routes>
             </main>
 
-            {showFooter && (
-                <footer className="bg-white border-t border-gray-200 mt-auto shadow-inner">
+                </main>
+
+                {showFooter && (
+                    <footer className="bg-white border-t border-gray-200 mt-auto shadow-inner">
                     <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
                         <div className="grid md:grid-cols-2 gap-12 mb-8 border-b border-gray-100 pb-8 text-center md:text-left">
                             <div>
@@ -94,9 +98,10 @@ function App() {
                             </p>
                         </div>
                     </div>
-                </footer>
-            )}
-        </div>
+                    </footer>
+                )}
+            </div>
+        </FavoritesProvider>
     );
 }
 
